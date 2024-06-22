@@ -50,6 +50,27 @@ app.get("/tables", (req, res) => {
   return res.status(200).json({ tables: tables });
 });
 
+app.get("/table/:id", (req, res) => {
+  const tableIdParam = req.params.id;
+
+  const tableId = Number(tableIdParam);
+  if (!tableId) {
+    console.log("Cannot parse number");
+    return res
+      .status(422)
+      .json({ error: "Failed to parse id. Pass a valid number" });
+  }
+
+  const table = tables.find((table) => table.id == tableId);
+  if (!table) {
+    console.log("Table id not found");
+    return res.status(404).json({ error: "Table with that id not found" });
+  }
+
+  console.log("Found table");
+  return res.status(200).json({ table: table });
+});
+
 //Create table
 app.post("/table", (req, res) => {
   const newTable = req.body.table as Table;
