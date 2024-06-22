@@ -47,7 +47,7 @@ app.use(express.json());
 
 //Get tables
 app.get("/tables", (req, res) => {
-  return res.json({ tables: tables });
+  return res.status(200).json({ tables: tables });
 });
 
 //Create table
