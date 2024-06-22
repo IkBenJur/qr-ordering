@@ -115,6 +115,26 @@ app.get("/menu", (req, res) => {
   return res.status(200).json({ menu: menu });
 });
 
+//Add new menu item
+app.post("/menu-item", (req, res) => {
+  const newItem = req.body.menuItem as menuItem;
+
+  if (!newItem) {
+    console.log("Failed to find item in post");
+    return res.status(400).json({ error: "item not found in request body" });
+  }
+
+  const menuItemIdAlreadyExist = menu.find((item) => item.id == newItem.id);
+  if (menuItemIdAlreadyExist) {
+    console.log("Item ID already taken");
+    return res.status(422).json({ error: "Item ID already taken" });
+  }
+
+  menu.push(newItem);
+  console.log("Added new menu item");
+
+  return res.status(200).json({ message: "Succesfully added new menu item" });
+});
 
 server.listen(3000, () => {
   console.log("server running on 3000");
