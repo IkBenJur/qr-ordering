@@ -43,10 +43,32 @@ const tables: Table[] = [
   },
 ];
 
+app.use(express.json());
 
 //Get tables
 app.get("/tables", (req, res) => {
   return res.json({ tables: tables });
+});
+
+//Create table
+app.post("/table", (req, res) => {
+  const newTable = req.body.table as Table;
+
+  if (!newTable) {
+    console.log("Failed to find table in post");
+    return res.status(400).json({ error: "Table not found in request body" });
+  }
+
+  const tableIdAlreadyExist = tables.find((table) => table.id == newTable.id);
+  if (tableIdAlreadyExist) {
+    console.log("Table ID already taken");
+    return res.status(422).json({ error: "Table ID already taken" });
+  }
+
+  tables.push(newTable);
+  console.log("Added new table");
+
+  return res.status(200).json({ message: "Succesfully added new table" });
 });
 
 
