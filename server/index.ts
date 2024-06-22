@@ -110,6 +110,12 @@ app.post("/order", (req, res) => {
   return res.status(200).json({ message: "Added order to table" });
 });
 
+//Get menu
+app.get("/menu", (req, res) => {
+  return res.status(200).json({ menu: menu });
+});
+
+
 server.listen(3000, () => {
   console.log("server running on 3000");
 });
