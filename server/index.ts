@@ -157,6 +157,6 @@ app.post("/menu-item", (req, res) => {
   return res.status(200).json({ message: "Succesfully added new menu item" });
 });
 
-server.listen(3000, () => {
-  console.log("server running on 3000");
+server.listen(5000, () => {
+  console.log("server running on 5000");
 });
